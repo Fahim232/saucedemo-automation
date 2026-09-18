@@ -1,25 +1,67 @@
-# Saucedemo Automation Tests
+<div align="center">
 
-Automation tests for [https://www.saucedemo.com/](https://www.saucedemo.com/) using **Python + pytest + Selenium WebDriver**, with **Allure** reporting.
+# 🛒 Saucedemo Automation
 
-## Scenarios Covered
+**End-to-End UI Automation Tests for [saucedemo.com](https://www.saucedemo.com/)**
 
-| Test | Description |
-|------|-------------|
-| Q1 `test_q1_locked_user.py` | Login with `locked_out_user` and verify the lockout error message. |
-| Q2 `test_q2_standard_user.py` | Login with `standard_user`, reset App State, add 3 items to cart, go to the final checkout page, verify product names + total price, finish the order, verify the success message, reset App State again and log out. |
-| Q3 `test_q3_performance_glitch_user.py` | Login with `performance_glitch_user`, reset App State, filter by name (Z to A), add the first product, go to the final checkout page, verify product name(s) + total price, finish the order, verify the success message, reset App State again and log out. |
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![pytest](https://img.shields.io/badge/pytest-9.x-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)](https://docs.pytest.org/)
+[![Selenium](https://img.shields.io/badge/Selenium-4.x-43B02A?style=for-the-badge&logo=selenium&logoColor=white)](https://www.selenium.dev/)
+[![Allure](https://img.shields.io/badge/Allure-Reports-CA4848?style=for-the-badge&logo=reportlab&logoColor=white)](https://allurereport.org/)
 
-## Project Structure
+[![Tests](https://github.com/Fahim232/saucedemo-automation/actions/workflows/ci.yml/badge.svg)](https://github.com/Fahim232/saucedemo-automation/actions/workflows/ci.yml)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Fahim232/saucedemo-automation?style=for-the-badge&color=blue)](https://github.com/Fahim232/saucedemo-automation/commits/main)
+[![GitHub repo size](https://img.shields.io/github/repo-size/Fahim232/saucedemo-automation?style=for-the-badge&color=purple)](https://github.com/Fahim232/saucedemo-automation)
+[![GitHub stars](https://img.shields.io/github/stars/Fahim232/saucedemo-automation?style=for-the-badge&color=yellow)](https://github.com/Fahim232/saucedemo-automation/stargazers)
+
+A clean **Page Object Model (POM)** based test suite covering login validation and
+full purchase journeys on the Sauce Demo demo store, with **Allure** reporting.
+
+</div>
+
+---
+
+## ✅ Test Scenarios
+
+| Q | User | Scenario |
+|:-:|:-----|:---------|
+| **Q1** | `locked_out_user` | Attempt login → verify the *"Sorry, this user has been locked out."* error message. |
+| **Q2** | `standard_user` | Reset App State → add **3 items** to cart → checkout → verify **product names & total price** → finish order → verify **success message** → reset App State → log out. |
+| **Q3** | `performance_glitch_user` | Reset App State → filter **Name (Z to A)** → add first product → checkout → verify **product name & total price** → finish order → verify **success message** → reset App State → log out. |
+
+### 🧪 What each test verifies
+- ✔️ Locked-out error message display
+- ✔️ Item names shown on the order summary match what was added
+- ✔️ Total price = sum of item prices + **8% tax** (computed & cross-checked)
+- ✔️ "Thank you for your order!" confirmation after finishing purchase
+- ✔️ App state reset & logout complete the journey cleanly
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Tools |
+|-------|-------|
+| **Language** | Python |
+| **Framework** | pytest |
+| **Automation** | Selenium WebDriver (Chrome / Firefox) |
+| **Design Pattern** | Page Object Model (POM) |
+| **Reporting** | Allure (`allure-pytest`) |
+| **CI/CD** | GitHub Actions (see `.github/workflows/ci.yml`) |
+
+---
+
+## 📁 Project Structure
 
 ```
 saucedemo-automation/
-├── conftest.py                 # pytest fixtures + browser options (headed/headless)
-├── pytest.ini                  # test discovery + allure-results output
+├── .github/workflows/ci.yml   # CI: runs tests + uploads Allure report
+├── conftest.py                # pytest fixtures, headed/headless, browser options
+├── pytest.ini                 # test discovery + allure-results output
 ├── requirements.txt
-├── run_all.sh                  # run all tests
-├── report.sh                   # generate + open the Allure report
-├── pages/                      # Page Object Model
+├── run_all.sh                 # run the whole suite
+├── report.sh                  # generate + open Allure report
+├── pages/                     # Page Object Model
 │   ├── base_page.py
 │   ├── login_page.py
 │   ├── inventory_page.py
@@ -31,46 +73,38 @@ saucedemo-automation/
     └── test_q3_performance_glitch_user.py
 ```
 
-## Prerequisites
+---
 
-- Python 3.8 or newer
-- Google Chrome (or Firefox) installed
-- Allure command-line tool
-  - macOS: `brew install allure`
-  - Other OS: [allure.getxray.app](https://allure.getxray.app/) / follow the [Allure installation guide](https://allurereport.org/docs/install/)
+## 🚀 Getting Started
 
-## Setup (first time only)
+### Prerequisites
+- **Python 3.8+**
+- **Google Chrome** (or Firefox) installed
+- **Allure CLI** — macOS: `brew install allure` · other OS: [allurereport.org/docs/install](https://allurereport.org/docs/install/)
+
+### Setup
 
 ```bash
 cd saucedemo-automation
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## How to Run
+---
 
-Tests run **sequentially** by default. The assignment requires running the
-tests **all together** as well as **each one separately** — both commands are
-shown below.
+## ▶️ How to Run
 
-> Note: `./.venv/bin/pytest` works without activating the virtual environment
-> first. If you activate it (`source .venv/bin/activate`), you can simply use
-> `pytest` instead.
+Tests run **sequentially**. You can run them all together **or** one by one.
 
-### 1. Run ALL three scenarios TOGETHER
+### 1. Run ALL scenarios together
 
 ```bash
 ./.venv/bin/pytest tests/
 ```
+*or, after activating the venv:* `pytest tests/`
 
-or
-
-```bash
-./run_all.sh
-```
-
-### 2. Run EACH scenario SEPARATELY
+### 2. Run each scenario separately
 
 ```bash
 ./.venv/bin/pytest tests/test_q1_locked_user.py
@@ -78,46 +112,57 @@ or
 ./.venv/bin/pytest tests/test_q3_performance_glitch_user.py
 ```
 
-### 3. Optional arguments
+### 3. Useful options
 
 ```bash
-./.venv/bin/pytest tests/ --headed      # run with a visible browser window (default is headless)
+./.venv/bin/pytest tests/ --headed         # show the browser window
 ./.venv/bin/pytest tests/ --browser firefox
+./run_all.sh                               # shortcut for running all tests
 ```
 
-### 4. Allure report (after every execution)
+> 💡 `performance_glitch_user` intentionally adds network delays, so Q3 is
+> slower by design — that's expected.
 
-An `allure-results` folder is created automatically on **every** test run.
+---
 
-To view the report, open a terminal (activate the venv if needed) and run:
+## 📊 Allure Report
+
+`allure-results/` is generated automatically on **every** run.
+
+### Live view
 
 ```bash
 allure serve allure-results
 ```
 
-Or generate a static report and open it in the browser:
+### Static report
 
 ```bash
 ./report.sh
 ```
 
-## GitHub Upload (step by step)
+The report shows each scenario with step-by-step breakdown, status, and timings.
 
-```bash
-cd saucedemo-automation
-git init
-git add .
-git commit -m "Saucedemo automation tests (pytest + selenium + allure)"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin main
-```
+---
 
-> Create an empty **public** repository on GitHub first, then use its URL in the
-> `git remote add` command above.
+## 🤖 CI/CD
 
-## Troubleshooting
+A [GitHub Actions workflow](.github/workflows/ci.yml) runs the full suite on every
+push. The "Tests passing" badge above reflects the latest CI run, and the Allure
+report is uploaded as a build artifact.
 
-- **Selenium cannot find the browser driver**: upgrade Selenium (`pip install -U selenium`). Selenium 4.6+ auto-manages drivers via Selenium Manager.
-- **Slow runs with `performance_glitch_user`**: this user intentionally adds delays. The tests wait up to 90 seconds for the page; a slow run is expected and normal.
-- **Report is empty**: make sure `allure-results` contains files after the run (`ls allure-results`).
+---
+
+## 👤 Author
+
+**Kazi Fahim (Fahim Montasir)**
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Fahim232)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kazifahim-montasir/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-8B5CF6?style=for-the-badge&logo=google-chrome&logoColor=white)](https://fahim232.github.io)
+
+---
+
+<div align="center">
+Made with ❤️ by <a href="https://github.com/Fahim232">Fahim Montasir</a> · Software Quality Assurance Engineer (in progress 🚀)
+</div>
