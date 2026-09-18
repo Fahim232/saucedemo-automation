@@ -50,12 +50,18 @@ pip install -r requirements.txt
 
 ## How to Run
 
-Tests run **sequentially** by default.
+Tests run **sequentially** by default. The assignment requires running the
+tests **all together** as well as **each one separately** — both commands are
+shown below.
 
-### 1. Run all three scenarios together
+> Note: `./.venv/bin/pytest` works without activating the virtual environment
+> first. If you activate it (`source .venv/bin/activate`), you can simply use
+> `pytest` instead.
+
+### 1. Run ALL three scenarios TOGETHER
 
 ```bash
-pytest tests/
+./.venv/bin/pytest tests/
 ```
 
 or
@@ -64,19 +70,19 @@ or
 ./run_all.sh
 ```
 
-### 2. Run each scenario separately
+### 2. Run EACH scenario SEPARATELY
 
 ```bash
-pytest tests/test_q1_locked_user.py
-pytest tests/test_q2_standard_user.py
-pytest tests/test_q3_performance_glitch_user.py
+./.venv/bin/pytest tests/test_q1_locked_user.py
+./.venv/bin/pytest tests/test_q2_standard_user.py
+./.venv/bin/pytest tests/test_q3_performance_glitch_user.py
 ```
 
 ### 3. Optional arguments
 
 ```bash
-pytest tests/ --headed        # run with a visible browser window (default is headless)
-pytest tests/ --browser firefox
+./.venv/bin/pytest tests/ --headed      # run with a visible browser window (default is headless)
+./.venv/bin/pytest tests/ --browser firefox
 ```
 
 ### 4. Allure report (after every execution)
